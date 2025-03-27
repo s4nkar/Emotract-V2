@@ -24,6 +24,11 @@ const MessageSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    delivery_status: {
+      type: String,
+      enum: ["sent", "delivered", "read"], // Only allow these values
+      default: "sent", // Default to "sent"
+    },
     processing_status: {
       type: String,
       default: 'processing',

@@ -3,7 +3,7 @@ from transformers import RobertaTokenizer, RobertaForSequenceClassification, Ber
 import torch
 import joblib
 
-def bert_model(text) -> str:
+def bert_model(text: str) -> str:
     bert_model = BertForSequenceClassification.from_pretrained('bert/model')
     tokenizer = BertTokenizer.from_pretrained('bert/tokenizer')
 
@@ -27,7 +27,7 @@ def bert_model(text) -> str:
     label = prediction.item()
     return emotions[label]
 
-def roberta_model(text) -> str:
+def roberta_model(text: str) -> str:
     roberta_model = RobertaForSequenceClassification.from_pretrained('roberta/model')
     tokenizer = RobertaTokenizer.from_pretrained('roberta/tokenizer')
 
@@ -53,7 +53,7 @@ def roberta_model(text) -> str:
     label = prediction.item()
     return emotions[label]
 
-def lr_model(text) -> str:
+def lr_model(text: str) -> str:
     lr_model = joblib.load('lr/lr_model.pkl')  # Load the Logistic Regression model
     vectorizer = joblib.load('lr/vectorizer.pkl') # Load the TF-IDF vectorizer
 
@@ -73,7 +73,7 @@ def lr_model(text) -> str:
 
     return emotions[label]
 
-def rf_model(text) -> str:
+def rf_model(text: str) -> str:
     rf_model = joblib.load('rf/rf_model.pkl')  # Load the Random Forest model
     vectorizer = joblib.load('rf/vectorizer.pkl')  # Load the TF-IDF vectorizer
 

@@ -100,6 +100,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    role: {
+      type: String,
+      default: "USER",
+      enum: ["USER", "ADMIN"],
+    },
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" }, // Auto-manages created_at & updated_at

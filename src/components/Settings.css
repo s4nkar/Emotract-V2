@@ -1,0 +1,188 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  
+  .bg-gray-900 {
+    background-color: #1a202c;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-gray-900 {
+    color: #1a202c;
+  }
+  
+  .bg-gray-100 {
+    background-color: #f7fafc;
+  }
+  
+  .bg-white {
+    background-color: white;
+  }
+  
+  .shadow-xl {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rounded-lg {
+    border-radius: 8px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .max-w-lg {
+    max-width: 32rem;
+  }
+  
+  /* Button Styles */
+  .back-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    text-decoration: underline;
+  }
+  
+  .text-blue-500 {
+    color: #3b82f6;
+  }
+  
+  .text-blue-500:hover {
+    text-decoration: underline;
+  }
+  
+  .text-red-500 {
+    color: #ef4444;
+  }
+  
+  .text-red-500:hover {
+    text-decoration: underline;
+  }
+  
+  /* Toggle Switch */
+  .relative.inline-flex {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    width: 44px;
+    background-color: #ccc;
+    border-radius: 9999px;
+    cursor: pointer;
+  }
+  
+  .relative.inline-flex .inline-block {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .bg-blue-500 {
+    background-color: #3b82f6;
+  }
+  
+  .translate-x-6 {
+    transform: translateX(20px);
+  }
+  
+  .translate-x-1 {
+    transform: translateX(4px);
+  }
+  
+  /* Border and Spacing */
+  .p-4 {
+    padding: 1rem;
+  }
+  
+  .border-b {
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .dark .border-gray-700 {
+    border-bottom: 1px solid #4a5568;
+  }
+  
+  /* Dark Mode */
+  .dark .bg-gray-800 {
+    background-color: #2d3748;
+  }
+  
+  .dark .text-white {
+    color: white;
+  }
+  /* Settings Page Backgrounds */
+.bg-gray-900 {
+    background-color: #1a202c;
+  }
+  .bg-gray-100 {
+    background-color: #f7fafc;
+  }
+  .bg-gray-800 {
+    background-color: #2d3748;
+  }
+  .text-white {
+    color: white;
+  }
+  .text-gray-900 {
+    color: #1a202c;
+  }
+  .text-gray-500 {
+    color: #a0aec0;
+  }
+  
+  /* Profile Section */
+  .profile-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .profile-card {
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* Buttons */
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    opacity: 0.7;
+  }
+  
+  /* File Input */
+  input[type="file"] {
+    padding: 4px;
+  }
+  
+  

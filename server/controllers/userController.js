@@ -59,3 +59,40 @@ export const register = async (req, res, next) => {
     return res.status(500).json({ msg: "Internal server error while signing up." });
   }
 };
+
+//login api
+
+export const login = async (req, res) => {
+  try {
+    const { email, username, password } = req.body;
+
+    if ((!email && !username) || !password) {
+      return res.status(400).json({ msg: "Email/Username and Password are required.", status: false });
+    }
+
+    // Find user by email or username
+    const user = await User.findOne({ 
+      $or: [{ email }, { username }] 
+    });
+
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid email or username.", status: false });
+    }
+
+    // Compare passwords
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ msg: "Invalid password.", status: false });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
+
+    return res.status(200).json({ status: true, msg: "Login successful", token, user }); 
+  } catch (error) {
+    console.error("❌ Login Error:", error.message);
+    return res.status(500).json({ msg: "Internal server error while logging in." });
+  }
+};
+
+ 

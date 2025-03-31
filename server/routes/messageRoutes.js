@@ -4,12 +4,12 @@ import {
   getChatMessages, 
   markMessageAsDelivered, 
   markMessageAsRead 
-} from "../controllers/messagecontroller.js";
+} from "../controllers/messageController.js";
 
 const router = express.Router();
 
 // ✅ Send a new message
-router.post("/send-message", sendMessage);
+router.post("/send", sendMessage);
 
 // ✅ Get messages for a chat
 router.get("/messages/:chatId", getChatMessages);

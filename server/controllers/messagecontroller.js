@@ -130,3 +130,45 @@ export const markMessageAsRead = async (req, res) => {
     return res.status(500).json({ msg: "Internal Server Error", error: error.message });
   }
 };
+
+//chat interface
+
+import Message from "../models/messages.js";
+
+export const sendMessages = async (req, res) => {
+  try {
+    const { sender, receiver, content } = req.body;
+
+    if (!sender || !receiver || !content) {
+      return res.status(400).json({ msg: "All fields are required." });
+    }
+
+    const message = await Message.create({ sender, receiver, content });
+
+    return res.status(201).json({ msg: "Message sent", message });
+  } catch (error) {
+    return res.status(500).json({ msg: "Error sending message" });
+  }
+};
+
+export const getMessages = async (req, res) => {
+  try {
+    const { sender, receiver } = req.query;
+
+    if (!sender || !receiver) {
+      return res.status(400).json({ msg: "Sender and Receiver IDs required." });
+    }
+
+    const messages = await Message.find({
+      $or: [
+        { sender, receiver },
+        { sender: receiver, receiver: sender },
+      ],
+    }).sort({ timestamp: 1 });
+
+    return res.status(200).json(messages);
+  } catch (error) {
+    return res.status(500).json({ msg: "Error retrieving messages" });
+  }
+};
+

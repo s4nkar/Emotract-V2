@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'; // Use bcryptjs if bcrypt fails
 import jwt from "jsonwebtoken";
 import User from '../models/User.js';
+import { response } from 'express';
 
 export const register = async (req, res, next) => {
   try {
@@ -95,4 +96,36 @@ export const login = async (req, res) => {
   }
 };
 
- 
+
+//searchContact
+export const searchContact = async (req, res) => {
+  try {
+    const { name: searchTerm } = req.query;
+
+    const contacts = await User.find({
+      $or: [{ username: { $regex: searchTerm, $options: 'i' } }],
+    });
+
+    if (contacts.length === 0) {
+      return res.status(200).json({
+        success: false,
+        data: contacts,
+        message: 'No contacts found',
+      });
+    }
+
+    // Only reached if contacts are found
+    return res.status(200).json({
+      success: true,
+      data: contacts,
+      message: 'Contacts found successfully',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error occurred while searching contacts',
+      error: error.message,
+    });
+  }
+};

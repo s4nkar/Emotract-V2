@@ -4,12 +4,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import messageRoutes from "./routes/messageRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import logger from "./middleware/logger.js";
+import logger from "./middleware/logger.js"; 
 
 // Load environment variables from .env file
 dotenv.config();
  
-
 // Initialize Express app
 const app = express();
 
@@ -27,10 +26,7 @@ const connectDB = async () => {
       throw new Error("MONGO_URI is not defined. Check your .env file.");
     }
 
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO_URI);
 
     console.log("✅ MongoDB Connected...");
   } catch (error) {

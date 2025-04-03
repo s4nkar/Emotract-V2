@@ -1,5 +1,6 @@
+import express from "express";
 
-import { updateProfile ,logoutUser, login, searchContact, register,} from "../controllers/usercontroller.js";
+import { updateProfile ,logoutUser, login, searchContact, register,} from "../controllers/authController.js";
 const router = express.Router();
 
 // Route for User Registration

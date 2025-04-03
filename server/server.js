@@ -3,15 +3,22 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import messageRoutes from "./routes/messageRoutes.js";
-import userRoutes from "./routes/userRoutes.js"; // ✅ Import user routes
+import userRoutes from "./routes/userRoutes.js";
+import logger from "./middleware/logger.js";
 
-dotenv.config({ path: "./.env" });
+// Load environment variables from .env file
+dotenv.config();
+ 
 
+// Initialize Express app
 const app = express();
 
 // Middleware
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); // Parse incoming JSON requests
+app.use(cors()); // Enable CORS for cross-origin requests
+
+// Logger middleware
+app.use(logger);
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -26,15 +33,9 @@ const connectDB = async () => {
     });
 
     console.log("✅ MongoDB Connected...");
-
-    // Start the server after DB connection
-    const PORT = process.env.PORT || 5003;
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
   } catch (error) {
     console.error("❌ MongoDB Connection Error:", error.message);
-    process.exit(1);
+    process.exit(1); // Exit process with failure
   }
 };
 
@@ -42,6 +43,10 @@ const connectDB = async () => {
 connectDB();
 
 // API Routes
+app.use("/api", messageRoutes);
+app.use("/api/user", userRoutes);
+ 
+// Root Route (Optional)
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes); // ✅ Add user routes
 
@@ -50,4 +55,11 @@ app.get("/", (req, res) => {
   res.send("🚀 Chat API is running...");
 });
 
+// Start the Server
+const PORT = process.env.PORT || 5003;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
+
 export default app;
+

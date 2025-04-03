@@ -19,9 +19,8 @@ app.use(cors()); // Enable CORS for cross-origin requests
 
 // Logger middleware
 app.use(logger);
- 
- 
-// MongoDB Connection 
+
+// MongoDB Connection
 const connectDB = async () => {
   try {
     if (!process.env.MONGO_URI) {
@@ -48,6 +47,10 @@ app.use("/api", messageRoutes);
 app.use("/api/user", userRoutes);
  
 // Root Route (Optional)
+app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes); // ✅ Add user routes
+
+// Root Route
 app.get("/", (req, res) => {
   res.send("🚀 Chat API is running...");
 });
@@ -57,3 +60,6 @@ const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+export default app;
+

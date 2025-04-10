@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 import Chats from "../models/Chats.js";
 import Messages from "../models/messages.js";
 
-// ✅ Send a Message
+/**
+ * ✅ Send a Message
+ * Saves the message, updates the chat's last message, and sets initial delivery status.
+ */
 export const sendMessage = async (req, res) => {
   try {
     const { from, to, message, is_group } = req.body;
@@ -56,7 +59,35 @@ export const sendMessage = async (req, res) => {
   }
 };
 
-// ✅ Get Messages for a Chat
+/**
+ * ✅ Receive New Messages (Polling Mechanism)
+ * Fetches new messages for a user that are not marked as "read".
+ */
+export const receiveMessages = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ msg: "Invalid user ID format" });
+    }
+
+    const newMessages = await Messages.find({
+      sender_id: { $ne: userId }, // Messages NOT sent by the user
+      read_by: { $ne: userId },   // Messages NOT read by the user
+      is_deleted: false,          // Exclude deleted messages
+    }).sort({ sent_at: 1 });
+
+    return res.status(200).json(newMessages);
+  } catch (error) {
+    console.error("🔥 Error in receiveMessages:", error);
+    return res.status(500).json({ msg: "Internal Server Error", error: error.message });
+  }
+};
+
+/**
+ * ✅ Fetch Previous Chat History
+ * Retrieves past messages for a specific chat ID.
+ */
 export const getChatMessages = async (req, res) => {
   try {
     const { chatId } = req.params;
@@ -65,8 +96,8 @@ export const getChatMessages = async (req, res) => {
       return res.status(400).json({ msg: "Invalid chat ID format" });
     }
 
-    const messages = await Messages.find({ chat_id: chatId })
-      .sort({ sent_at: 1 })
+    const messages = await Messages.find({ chat_id: chatId, is_deleted: false })
+      .sort({ sent_at: 1 }) // Oldest messages first
       .select("text sender_id sent_at read_by delivery_status processing_status");
 
     return res.status(200).json(messages);
@@ -76,7 +107,10 @@ export const getChatMessages = async (req, res) => {
   }
 };
 
-// ✅ Mark a Message as Delivered
+/**
+ * ✅ Mark a Message as Delivered
+ * Updates the message status when it reaches the receiver.
+ */
 export const markMessageAsDelivered = async (req, res) => {
   try {
     const { messageId } = req.params;
@@ -102,7 +136,10 @@ export const markMessageAsDelivered = async (req, res) => {
   }
 };
 
-// ✅ Mark a Message as Read
+/**
+ * ✅ Mark a Message as Read
+ * Updates the read status of a message when the receiver views it.
+ */
 export const markMessageAsRead = async (req, res) => {
   try {
     const { messageId, userId } = req.body;

@@ -3,16 +3,21 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import messageRoutes from "./routes/messageRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import logger from "./middleware/logger.js"; 
 
 // Load environment variables from .env file
-dotenv.config({ path: "./.env" }); 
-
+dotenv.config();
+ 
 // Initialize Express app
 const app = express();
 
 // Middleware
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cors()); // Enable CORS for cross-origin requests
+
+// Logger middleware
+app.use(logger);
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -21,10 +26,7 @@ const connectDB = async () => {
       throw new Error("MONGO_URI is not defined. Check your .env file.");
     }
 
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO_URI);
 
     console.log("✅ MongoDB Connected...");
   } catch (error) {
@@ -38,8 +40,13 @@ connectDB();
 
 // API Routes
 app.use("/api", messageRoutes);
-
+app.use("/api/user", userRoutes);
+ 
 // Root Route (Optional)
+app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes); // ✅ Add user routes
+
+// Root Route
 app.get("/", (req, res) => {
   res.send("🚀 Chat API is running...");
 });
@@ -49,3 +56,6 @@ const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+export default app;
+

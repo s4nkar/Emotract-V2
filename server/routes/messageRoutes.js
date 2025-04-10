@@ -3,15 +3,15 @@ import {
   sendMessage, 
   receiveMessages,  // ✅ Receive new messages
   getChatMessages, 
-  markMessageAsDelivered, 
+  markMessageAsDelivered,
   markMessageAsRead
-  
+
 } from "../controllers/messageController.js";
 
 const router = express.Router();
 
 // ✅ Send a new message
-router.post("/send-message", sendMessage);
+router.post("/send", sendMessage);
 
 // ✅ Receive new messages (Polling)
 router.get("/receive/:userId", receiveMessages);

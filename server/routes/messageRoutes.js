@@ -5,8 +5,7 @@ import {
   getChatMessages, 
   markMessageAsDelivered, 
   markMessageAsRead,
-  deleteMessageForMe,      // ✅ New: Soft delete for a user
-  deleteMessageForEveryone // ✅ New: Hard delete for all users
+  
 } from "../controllers/messageController.js";
 
 const router = express.Router();
@@ -26,10 +25,6 @@ router.put("/messages/:messageId/delivered", markMessageAsDelivered);
 // ✅ Mark a message as read
 router.put("/messages/read", markMessageAsRead);
 
-// ✅ Delete a message for the current user (Soft delete)
-router.put("/messages/delete-for-me", deleteMessageForMe);
 
-// ✅ Delete a message for everyone (Hard delete)
-router.put("/messages/delete-for-everyone/:messageId", deleteMessageForEveryone);
 
 export default router;

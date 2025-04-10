@@ -4,7 +4,7 @@ import {
   receiveMessages,  // ✅ Receive new messages
   getChatMessages, 
   markMessageAsDelivered, 
-
+  markMessageAsRead
   
 } from "../controllers/messageController.js";
 
